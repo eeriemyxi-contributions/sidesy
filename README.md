@@ -36,16 +36,32 @@ A browser extension for Chrome and Firefox that brings the comments section to t
 
 ### Firefox
 
-**Option A — with `web-ext` (recommended, auto-reloads on file changes)**
+**Option A — `web-ext run` (live reload, lasts while the command is running)**
+
+Best for active development. The extension is active only while `web-ext run` is running and is removed when the process exits or Firefox closes.
 
 1. Clone the repo
 2. Install web-ext if you haven't: `npm install -g web-ext`
 3. Run `web-ext run` from inside the repo folder
 4. Firefox will open with the extension loaded and live-reload on any file change
 
-**Option B — without `web-ext` (temporary load)**
+**Option B — Load Temporary Add-on (no tooling needed, lasts until Firefox closes)**
+
+Quickest way to test without any extra tools. The extension is removed every time Firefox closes and must be reloaded manually.
 
 1. Clone the repo
 2. Navigate to `about:debugging#/runtime/this-firefox`
 3. Click **Load Temporary Add-on** and select any file inside the repo folder (e.g. `manifest.json`)
-4. Note: the extension is removed when Firefox closes — repeat to reload
+
+**Option C — Install from `.zip` via `web-ext build` (permanent, requires a flag)**
+
+Installs the extension permanently — it survives Firefox restarts just like a store-installed extension. However, Firefox enforces extension signing on most channels, so you need to disable that check first.
+
+> **Supported Firefox editions only:** `xpinstall.signatures.required` can be set to `false` on **Firefox Developer Edition**, **Firefox Nightly**, and **Firefox ESR**. It has no effect on **Firefox Release** or **Firefox Beta** — the preference is hardcoded there and cannot be overridden.
+
+1. Clone the repo
+2. Build the zip: `web-ext build` (output goes to `web-ext-artifacts/`)
+3. In Firefox, open `about:config`, search for `xpinstall.signatures.required`, and set it to `false`
+4. Go to `about:addons`, click the **⚙ gear icon**, and select **Install Add-on From File...**
+5. Select the `.zip` file from `web-ext-artifacts/`
+6. The extension is now installed permanently and persists across restarts
