@@ -36,6 +36,16 @@ A browser extension for Chrome and Firefox that brings the comments section to t
 
 ### Firefox
 
+**Option A — with `web-ext` (recommended, auto-reloads on file changes)**
+
+1. Clone the repo
+2. Install web-ext if you haven't: `npm install -g web-ext`
+3. Run `web-ext run` from inside the repo folder
+4. Firefox will open with the extension loaded and live-reload on any file change
+
+**Option B — without `web-ext` (temporary load)**
+
 1. Clone the repo
 2. Navigate to `about:debugging#/runtime/this-firefox`
 3. Click **Load Temporary Add-on** and select any file inside the repo folder (e.g. `manifest.json`)
+4. Note: the extension is removed when Firefox closes — repeat to reload
