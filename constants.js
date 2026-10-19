@@ -1,4 +1,8 @@
-const CONSTANTS = {
+// Firefox port: constants shared between background event page and content script.
+// Use globalThis assignment (not `const`) so double-evaluation via
+// background.scripts + the importScripts fallback below can't throw
+// "redeclaration of CONSTANTS".
+globalThis.CONSTANTS = globalThis.CONSTANTS || {
   WELCOME_PAGE_URL: "https://abinjohn123.github.io/sidesy-landing/",
   POPUP_LINKS: [
     {
@@ -16,11 +20,12 @@ const CONSTANTS = {
       url: "mailto:builtbyabin@gmail.com?subject=Sidesy%20Feedback",
     },
     {
+      // Firefox port: Chrome Web Store URL replaced with AMO listing.
       label: "Enjoy using? Leave a review",
       description: "Help spread Sidesy to more people",
       icon: "popup/icons/review.svg",
       hoverColor: "#f4b400",
-      url: "https://chromewebstore.google.com/detail/sidesy-your-comments-side/mlceikceecooilkgiikkopipedhjjech",
+      url: "https://addons.mozilla.org/en-US/firefox/addon/sidesy/",
     },
     {
       label: "Love Sidesy? Buy me a coffee",
@@ -29,22 +34,18 @@ const CONSTANTS = {
       hoverColor: "#34a853",
       url: "https://buymeacoffee.com/abin.john",
     },
-    {
-      label: "Conduktor",
-      description: "Spotlight-style launcher for Chrome",
-      icon: "popup/icons/conduktor.svg",
-      hoverColor: "#f85842",
-      url: "https://chromewebstore.google.com/detail/conduktor-search-rename-g/ppemfnloahkomglmckngiioogeibdbdh",
-      sectionLabel: "Also from the developer",
-    },
+    // Firefox port: Conduktor entry omitted (Chrome-only for now).
   ],
   ANNOUNCEMENT: {
     items: [
-      "Expandable sidebar comments\nYou can now expand comments to full height from the new header button, or by pressing Z when comments are on the side. The extra height fits more comments at once, especially on smaller screens. Thanks to everyone who asked for this!",
+      "Full-height sidebar\nSwitch comments to full height from the new header button, or by pressing Z when comments are on the side. Press again to go back to standard height. Handy on smaller screens — thanks to everyone who asked for this!",
+      "Fold comments away\nPress X or the new header button to fold comments into a slim bar, then click the bar (or press X again) to unfold. Prefer it folded? Turn on Fold comments by default in Settings — it applies to new videos.",
     ],
   },
   DEVELOPER_MESSAGE: {
-    enabled: true,
+    // Firefox port: disabled — current campaign promotes Conduktor (Chrome-only).
+    // Re-enable with Firefox-appropriate copy/URL when ready.
+    enabled: false,
     id: "conduktor-2026-05",
     title: "Hi, it's Abin from Sidesy",
     bodyParagraphs: [
