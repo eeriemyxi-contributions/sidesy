@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Firefox port: `browser` with `chrome` fallback.
+  // `browser` (Firefox, promise-based) with `chrome` (Chromium) fallback.
   const ext = globalThis.browser ?? globalThis.chrome;
   const COLLAPSE_DEFAULT_KEY = "sidesy_collapse_by_default";
   const menu = document.getElementById("popup-menu");

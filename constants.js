@@ -1,7 +1,11 @@
-// Firefox port: constants shared between background event page and content script.
+// Shared constants for background and content scripts.
 // Use globalThis assignment (not `const`) so double-evaluation via
-// background.scripts + the importScripts fallback below can't throw
-// "redeclaration of CONSTANTS".
+// background.scripts + the importScripts fallback in Chrome service workers
+// cannot throw "redeclaration of CONSTANTS".
+
+// Detect browser at runtime: Firefox exposes `browser`, Chrome exposes `chrome`.
+const _isFirefox = typeof globalThis.browser !== "undefined";
+
 globalThis.CONSTANTS = globalThis.CONSTANTS || {
   WELCOME_PAGE_URL: "https://abinjohn123.github.io/sidesy-landing/",
   POPUP_LINKS: [
@@ -20,12 +24,13 @@ globalThis.CONSTANTS = globalThis.CONSTANTS || {
       url: "mailto:builtbyabin@gmail.com?subject=Sidesy%20Feedback",
     },
     {
-      // Firefox port: Chrome Web Store URL replaced with AMO listing.
       label: "Enjoy using? Leave a review",
       description: "Help spread Sidesy to more people",
       icon: "popup/icons/review.svg",
       hoverColor: "#f4b400",
-      url: "https://addons.mozilla.org/en-US/firefox/addon/sidesy/",
+      url: _isFirefox
+        ? "https://addons.mozilla.org/en-US/firefox/addon/sidesy/"
+        : "https://chromewebstore.google.com/detail/sidesy-your-comments-side/fjonckloandknnijadolfebflfgjchne",
     },
     {
       label: "Love Sidesy? Buy me a coffee",
@@ -34,7 +39,6 @@ globalThis.CONSTANTS = globalThis.CONSTANTS || {
       hoverColor: "#34a853",
       url: "https://buymeacoffee.com/abin.john",
     },
-    // Firefox port: Conduktor entry omitted (Chrome-only for now).
   ],
   ANNOUNCEMENT: {
     items: [
@@ -43,8 +47,6 @@ globalThis.CONSTANTS = globalThis.CONSTANTS || {
     ],
   },
   DEVELOPER_MESSAGE: {
-    // Firefox port: disabled — current campaign promotes Conduktor (Chrome-only).
-    // Re-enable with Firefox-appropriate copy/URL when ready.
     enabled: false,
     id: "conduktor-2026-05",
     title: "Hi, it's Abin from Sidesy",

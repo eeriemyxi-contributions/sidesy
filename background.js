@@ -1,7 +1,7 @@
-// Firefox (MV3 event page) + Chrome (MV3 service worker) compatible background.
-// In Firefox the manifest lists ["constants.js", "background.js"] as
-// background.scripts sharing one global scope; in Chrome only background.js
-// runs as a service worker, so load constants via importScripts there.
+// Cross-browser background script (MV3).
+// Firefox (event page): manifest lists background.scripts — constants.js and
+// background.js share one global scope. Chrome (service worker): only
+// background.js runs, so constants.js is loaded via importScripts below.
 if (typeof CONSTANTS === "undefined" && typeof importScripts === "function") {
   try {
     importScripts("constants.js");
